@@ -75,8 +75,8 @@ export default {
   data () {
     return {
       user: {
-        mobile: '',
-        code: ''
+        mobile: '18888888888',
+        code: '246810'
       },
       // 控制倒计时的显示与隐藏
       isCountDownShow: false,
