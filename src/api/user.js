@@ -2,6 +2,8 @@
 // 用户请求的相关模块
 import request from '@/utils/request'
 
+// import store from '@/store'
+
 export const login = data => {
   return request({
     method: 'POST',
@@ -18,13 +20,14 @@ export const sendSms = mobile => {
   })
 }
 
-// // 用户相关请求模块
-// import request from '@/utils/request'
-
-// export const login = data => {
-//   return request({
-//     method: 'POST',
-//     url: '/app/v1_0/authorizations',
-//     data
-//   })
-// }
+// 获取用户数据
+export const getUsersInfo = () => {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/user'
+    // 发送请求头数据
+    // headers: {
+    //   Authorization: `Bearer ${store.state.user.token}`
+    // }
+  })
+}

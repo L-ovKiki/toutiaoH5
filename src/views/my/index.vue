@@ -1,6 +1,53 @@
 <template>
   <div class="my-container">
-    <div class="header not-login">
+    <!-- 已登录头部 -->
+    <div
+      v-if="user"
+      class="header user-info"
+    >
+      <div class="base-info">
+        <div class="left">
+          <van-image
+            round
+            fit="cover"
+            class="avatar"
+            :src="userInfo.photo"
+          />
+          <span class="name">{{userInfo.name}}</span>
+        </div>
+        <div class="right">
+          <van-button
+            class="btn"
+            size="mini"
+            round
+          >编辑资料</van-button>
+        </div>
+      </div>
+      <div class="data-stats">
+        <div class="data-item">
+          <span class="count">{{userInfo.art_count}}</span>
+          <span class="text">头条</span>
+        </div>
+        <div class="data-item">
+          <span class="count">{{userInfo.follow_count}}</span>
+          <span class="text">关注</span>
+        </div>
+        <div class="data-item">
+          <span class="count">{{userInfo.fans_count}}</span>
+          <span class="text">粉丝</span>
+        </div>
+        <div class="data-item">
+          <span class="count">{{userInfo.like_count}}</span>
+          <span class="text">获赞</span>
+        </div>
+
+      </div>
+    </div>
+    <!-- 未登录的头部 -->
+    <div
+      v-else
+      class="header not-login"
+    >
       <div
         class="login-btn"
         @click="$router.push('/login')"
@@ -13,60 +60,102 @@
         <span class="text">登录 / 注册</span>
       </div>
     </div>
-    <div class="header user-info">
-      <div class="base-info">
-        <div class="left">
-          <van-image
-            round
-            fit="cover"
-            class="avatar"
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
-          />
-          <span class="name">黑马头条号</span>
-        </div>
-        <div class="right">
-          <van-button
-            size="mini"
-            round
-          >编辑资料</van-button>
-        </div>
-      </div>
-      <div class="data-stats">
-        <div class="data-item">
-          <span class="count">88</span>
-          <span class="text">头条</span>
-        </div>
-        <div class="data-item">
-          <span class="count">66</span>
-          <span class="text">关注</span>
-        </div>
-        <div class="data-item">
-          <span class="count">1314</span>
-          <span class="text">粉丝</span>
-        </div>
-        <div class="data-item">
-          <span class="count">666</span>
-          <span class="text">获赞</span>
-        </div>
 
-      </div>
-    </div>
+    <!-- 导航 -->
+    <van-grid
+      :column-num="2"
+      class="grid-nav"
+      clickable
+    >
+      <van-grid-item class="grid-item">
+        <i
+          slot="icon"
+          class="iconfont icon-shoucang"
+        ></i>
+        <span
+          slot="text"
+          class="text"
+        >收藏</span>
+      </van-grid-item>
+      <van-grid-item class="grid-item">
+        <i
+          slot="icon"
+          class="iconfont icon-lishi"
+        ></i>
+        <span
+          slot="text"
+          class="text"
+        >历史</span>
+      </van-grid-item>
+    </van-grid>
+
+    <van-cell
+      title="消息通知"
+      is-link
+    />
+    <van-cell
+      class="mb-9"
+      title="小智同学"
+      is-link
+    />
+    <van-cell
+      v-if="user"
+      class="logout-cell"
+      clickable
+      title="退出登录"
+      @click="onLogout"
+    />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { getUsersInfo } from '@/api/user'
 export default {
   name: 'MyIndex',
   components: {},
   props: {},
   data () {
-    return {}
+    return {
+      // 用户数据
+      userInfo: {}
+    }
   },
-  computed: {},
+  computed: {
+    ...mapState(['user'])
+  },
   watch: {},
-  created () {},
+  created () {
+    // 如果用户登录了，则请求加载用户信息数据
+    if (this.user) {
+      this.loadUserInfo()
+    }
+  },
   mounted () {},
-  methods: {}
+  methods: {
+    // 点击退出登录
+    onLogout () {
+      // 退出提示
+      this.$dialog.confirm({
+        title: '是否确认退出'
+      })
+        .then(() => {
+          // 确认退出，清除登录状态(容器中的user和本地存储中的user)
+          this.$store.commit('setUser', null)
+        })
+        .catch(() => {
+          console.log('取消')
+        })
+    },
+    async loadUserInfo () {
+      try {
+        const { data } = await getUsersInfo()
+        this.userInfo = data.data
+      } catch (err) {
+        this.$toast('获取数据失败，请稍后重试')
+      }
+    }
+  }
 }
 </script>
 
@@ -123,6 +212,17 @@ export default {
           color: #ffffff;
         }
       }
+      .right {
+        font-family: MicrosoftYaHei;
+        font-weight: 400;
+        font-size: 20px;
+        .btn {
+          width: 115px;
+          height: 32px;
+          background: #ffffff;
+          border-radius: 16px;
+        }
+      }
     }
     .data-stats {
       background-color: #3296fa;
@@ -144,6 +244,34 @@ export default {
         }
       }
     }
+  }
+  .grid-nav {
+    .grid-item {
+      .iconfont {
+        font-size: 45px;
+        color: #eb5253;
+      }
+      .text {
+        font-size: 28px;
+        color: #333333;
+        font-family: MicrosoftYaHei;
+        font-weight: 400;
+      }
+      .icon-lishi {
+        color: #ff9d1d;
+      }
+    }
+  }
+  .logout-cell {
+    text-align: center;
+    color: #d86262;
+  }
+
+  .mb-9 {
+    margin-bottom: 9px;
+  }
+  .van-icon-arrow::before {
+    color: #9f9f9f;
   }
 }
 </style>
