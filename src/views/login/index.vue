@@ -4,7 +4,13 @@
     <van-nav-bar
       class="page-nav-bar"
       title="登录"
-    />
+    >
+      <van-icon
+        name="cross"
+        slot="left"
+        @click="$router.back()"
+      />
+    </van-nav-bar>
     <!-- 登录表单 -->
     <van-form
       @submit="onSubmit"
