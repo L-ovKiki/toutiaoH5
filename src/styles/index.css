@@ -9,3 +9,6 @@ body {
 .van-icon {
   color: #ffffff !important;
 }
+.van-nav-bar__title {
+  max-width: unset !important;
+}
