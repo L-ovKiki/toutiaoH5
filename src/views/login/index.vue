@@ -6,7 +6,7 @@
       title="登录"
     >
       <van-icon
-        name="cross"
+        name="arrow-left"
         slot="left"
         @click="$router.back()"
       />
