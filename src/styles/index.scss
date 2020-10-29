@@ -10,9 +10,9 @@ body {
   color: #ffffff !important;
 }
 
-.van-icon-search::before {
+/* .van-icon-search::before {
   color: #ffffff;
-}
+} */
 .van-nav-bar__title {
   max-width: unset !important;
 }
@@ -30,4 +30,7 @@ body {
 }
 .van-grid-item__icon-wrapper {
   position: unset !important;
+}
+.van-button__icon {
+  color: #ffffff !important;
 }

@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 
 // 加载全局样式
-import '@/styles/index.css'
+import '@/styles/index.scss'
 
 // 导入字体图标
 import '@/assets/fonts/iconfont.css'

@@ -94,7 +94,6 @@ export default {
         // }
         // 把请求结果放到list数组中
         const { results } = data.data
-        console.log('onLoad -> results', results)
         // 数组的展开操作符,他会把数组元素一个一个全部拿出来，列如：results[0],results[1]，results[2]
         this.list.push(...results)
         // 3.本次数据加载结束之后要把加载状态设置为结束

@@ -12,6 +12,7 @@
         size="small"
         round
         icon="search"
+        to="/search"
       >搜索</van-button>
     </van-nav-bar>
     <!-- 频道列表 -->
@@ -203,6 +204,11 @@ export default {
         height: 100%;
         background-image: url(~@/assets/gradient-gray-line.png);
         background-size: contain;
+      }
+      ::v-deep.van-button__content {
+        .van-icon-search {
+          color: #ffffff;
+        }
       }
     }
   }
