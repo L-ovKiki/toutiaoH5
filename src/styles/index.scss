@@ -22,15 +22,13 @@ body {
 .van-grid-item__content {
   background: #f4f5f6 !important;
 }
-.van-icon-plus::before {
-  color: #222222;
-}
+
 .van-icon-clear::before {
   color: #cacaca;
 }
 .van-grid-item__icon-wrapper {
   position: unset !important;
 }
-.van-button__icon {
-  color: #ffffff !important;
+.van-nav-bar .van-icon {
+  color: #fff !important;
 }
