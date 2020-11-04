@@ -42,6 +42,11 @@ const routes = [
     name: 'article',
     component: () => import('@/views/article'),
     props: true// 开启porps传参，把路由参数映射到组件中的props中
+  },
+  {
+    path: '/user/profile',
+    name: 'user-profile',
+    component: () => import('@/views/user-profile')
   }
 ]
 
